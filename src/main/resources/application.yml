@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: mcp-shop-java
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/shop}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 20
+  threads:
+    virtual:
+      enabled: true
+
+app:
+  mcp:
+    public-base-url: ${MCP_PUBLIC_BASE_URL:http://localhost:8080}
+    authorization-server: ${MCP_AUTHORIZATION_SERVER:}   # e.g. https://auth.example.com/realms/shop
+    jwk-set-uri: ${MCP_JWK_SET_URI:}                     # preferred over hmac-secret
+    hmac-secret: ${MCP_HMAC_SECRET:dev-only-secret-change-me-32-chars-min!!}
+    rate-per-minute: 60
+    burst: 20
+    loop-limit: 8
+    suspend-for: 10m
+    daily-call-cap: 2000
+    daily-write-cap: 200
+    statement-timeout: 8s
+    confirmation-ttl: 5m
